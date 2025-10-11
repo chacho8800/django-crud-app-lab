@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% load static %}
+
+{% block head %}
+<title>National Parks</title>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>National Parks</h1>
+    {% for park in parks %}
+    <a href="{% url 'park-detail' park.id%}">
+        <h3>{{ park.name }} </h3>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
