@@ -14,3 +14,11 @@ class NationalParks(models.Model):
         return reverse("park-detail", kwargs={"park_id": self.id})
     
 
+class Animal(models.Model):
+    species = models.CharField(max_length=200)
+    count = models.IntegerField()
+
+    park = models.ForeignKey(NationalParks, on_delete=models.CASCADE, related_name='animals')
+
+    def __str__(self):
+        return f"{self.species} {self.park.name}"

@@ -14,4 +14,21 @@
         <a href="{% url 'park-delete' park.id %}" style="color: white; background: red; padding:6px 12px; border-radius:5px;">Delete</a>
     </div>  
 
+    <h2>Add a Animal</h2>
+    <form method='post' action="{% url 'add-animal' park.id %}">
+        {% csrf_token %}
+        {{ animal_form.as_p}}
+        <button type='submit'>Add Animal</button>
+    </form>
+
+
+    <h3>Animals in this park</h3>
+    <ul>
+        {%for animal in animals %}
+            <li>{{animal.species}} : Count - {{animal.count}}</li>
+        {% empty %}
+            <li>No Animals</li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
