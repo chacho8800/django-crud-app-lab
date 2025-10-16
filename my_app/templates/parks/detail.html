@@ -6,8 +6,12 @@
 
 {% block content %}
     <div style="margin-bottom:20px; border-bottom:1px solid #ccc; padding-bottom:10px;">
-        <h3>Name: {{ park.name }} </h3>
+        <h3>{{ park.name }}</h3>
         <p><strong>Location:</strong> {{ park.location }}</p>
         <p><strong>Description:</strong> {{ park.description }}</p>
+
+        <a href="{% url 'park-update' park.id %}" style="color: white; background: red; padding:6px 12px; border-radius:5px;">Edit</a>
+        <a href="{% url 'park-delete' park.id %}" style="color: white; background: red; padding:6px 12px; border-radius:5px;">Delete</a>
     </div>  
+
 {% endblock %}
