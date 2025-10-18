@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>All Activity's</title>
+{% endblock  %}
+
+{% block content%}
+{% for activ in activity_list %}
+    <a href="{% url 'activity-detail' activ.id %}">
+    <div> 
+        <h2>{{ activ.name }}</h2>
+    </div>
+    </a>
+    {% endfor %}
+{% endblock %}

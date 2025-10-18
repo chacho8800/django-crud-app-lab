@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Delete {{ object.name }} </title>
+{% endblock %}
+
+{% block content %}
+<h1> Do you want do delete {{ object.name }} </h1>
+
+<form actio='' method='post'>
+    {% csrf_token %}
+    <a href="{% url 'activity-detail' object.id %}">Cancel</a>
+    <button type='submit'>Delete</button>
+</form>
+{% endblock%}

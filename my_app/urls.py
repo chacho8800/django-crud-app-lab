@@ -8,5 +8,12 @@ urlpatterns = [
     path('parks/create/', views.ParkCreate.as_view(), name='park-create'),
     path('parks/<int:pk>/update', views.ParkUpdate.as_view(), name='park-update'),
     path('parks/<int:pk>/delete', views.ParkDelete.as_view(), name='park-delete'),
-    path('parks/<int:park_id>/add-animal/', views.add_animal, name='add-animal')
+    path('parks/<int:park_id>/add-animal/', views.add_animal, name='add-animal'),
+        
+    path("activity/create/", views.ActivityCreate.as_view(), name="activity-create"),
+    path("activity/<int:pk>/", views.ActivityDetail.as_view(), name="activity-detail"),
+    path('activity/<int:pk>/delete', views.ActivityDelete.as_view(), name='activity-delete'),
+    path('activity/<int:pk>/update', views.ActivityUpdate.as_view(), name='activity-update'),
+    path("activity/", views.ActivityList.as_view(), name="activity-index"),
+    
 ]

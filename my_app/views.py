@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import NationalParks, Animal
+from .models import NationalParks, Animal, Activity
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import AnimalForm
+from django.views.generic import DetailView, ListView
+from .forms import AnimalForm, ActivityForm
 
 
 # Create your views here.
@@ -15,11 +16,17 @@ def parks(request): # index
 
 def park_detail(request, park_id): # detail
     park = NationalParks.objects.get(id=park_id)
+    activitys = Activity.objects.all()
     animals = park.animals.all()
     animal_form = AnimalForm()
-    return render(request, 'parks/detail.html', {'park': park, 'animal_form' : animal_form, "animals" : animals} )
+    return render(request, 'parks/detail.html', {
+        'park': park,
+        'animal_form' : animal_form,
+        "animals" : animals,
+        'activitys' : activitys
+        })
 
-def add_animal(request, park_id):
+def add_animal(request, park_id): 
     form = AnimalForm(request.POST)
 
     if form.is_valid():
@@ -28,16 +35,35 @@ def add_animal(request, park_id):
         new_animal.save()
     return redirect('park-detail', park_id = park_id)
 
+
 class ParkCreate(CreateView): # create
     model = NationalParks
-    fields = '__all__'
+    fields = ['name','location', 'description']
 
 
 class ParkUpdate(UpdateView): # update
-    model = NationalParks, Animal
-    fields = '__all__'
+    model = NationalParks
+    fields = ['name','location', 'description']
 
 class ParkDelete(DeleteView): # delete
     model = NationalParks
     success_url = '/parks/'
 
+
+class ActivityCreate(CreateView):
+    model = Activity
+    form_class = ActivityForm
+
+class ActivityList(ListView):
+    model = Activity
+
+class ActivityDetail(DetailView):
+    model = Activity
+
+class ActivityDelete(DeleteView):
+    model = Activity
+    success_url = '/activity/'
+
+class ActivityUpdate(UpdateView):
+    model = Activity
+    form_class = ActivityForm
