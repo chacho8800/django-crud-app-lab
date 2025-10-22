@@ -11,12 +11,22 @@
     <header>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
+          {% if user.is_authenticated %}
           <li><a href="{% url 'parks-index' %}">Parks</a></li>
           <li><a href="{% url 'activity-index' %}">Activity</a></li>
           <li><a href="{% url 'animals-index' %}">Animals</a></li>
           <li><a href="{% url 'park-create' %}">Add a park</a></li>
           <li><a href="{% url 'activity-create' %}">Add a activity</a></li>
+          <li>
+            <form action="{% url 'logout' %}" method='post'>
+              {% csrf_token %}
+              <button type='submit'>Logout</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'home' %}">Login</a></li>
+          <li><a href="{% url 'signup' %}">SignUp</a></li>
+          {% endif %}
         </ul>
       </nav>
     </header>
