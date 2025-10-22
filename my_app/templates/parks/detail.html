@@ -35,7 +35,7 @@
     <h3>Animals in this park</h3>
     <ul>
         {%for animal in animals %}
-            <li>{{animal.species}} : Count - {{animal.count}}</li>
+            <a href="{% url 'animal-detail' animal.id %}"><li>{{animal.species}} : Count - {{animal.count}}</li></a>
         {% empty %}
             <li>No Animals</li>
         {% endfor %}

@@ -35,6 +35,27 @@ def add_animal(request, park_id):
         new_animal.save()
     return redirect('park-detail', park_id = park_id)
 
+def animal_detail(request,animal_id):
+    animal_id = Animal.objects.get(id=animal_id)
+
+    print(animal_id)
+    return render(request, 'animal/animal_detail.html', {
+         'animal': animal_id
+        })
+
+
+class AnimalsList(ListView):
+    model = Animal
+
+
+class AnimalDelete(DeleteView):
+    model = Animal
+    success_url = '/animals/'
+
+class AnimalUpdate(UpdateView):
+    model = Animal
+    form_class = AnimalForm
+
 
 class ParkCreate(CreateView): # create
     model = NationalParks
@@ -67,3 +88,5 @@ class ActivityDelete(DeleteView):
 class ActivityUpdate(UpdateView):
     model = Activity
     form_class = ActivityForm
+
+

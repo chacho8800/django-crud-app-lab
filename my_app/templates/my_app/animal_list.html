@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<title>All Animals</title>
+{% endblock %}
+
+{% block content %}
+    <h3>Animals</h3>
+    <ul>
+        {%for animal in animal_list %}
+            <a href="{% url 'animal-detail' animal.id %}">
+            <p><strong>Species:</strong> {{ animal.species }}</p>
+            <p><strong>Park:</strong> {{ animal.park.name }}</p>
+            <p><strong>Count:</strong> {{ animal.count }}</p>
+            </a>
+            <hr>
+        {% empty %}
+            <li>No Animals</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>{{object.species}}</title>
+{% endblock %}
+
+{% block content %}
+<h1>Animal</h1>
+<div>
+  <p><strong>Species:</strong> {{ animal.species }}</p>
+  <p><strong>Park:</strong> {{ animal.park.name }}</p>
+  <p><strong>Count:</strong> {{ animal.count }}</p>
+
+<a href="{% url 'parks-index' %}">Back to Park</a>
+<a href="{% url 'animal-delete' animal.id %}">Delete</a>
+<a href="{% url 'animal-update' animal.id %}">Edit</a>
+
+</div>
+{% endblock %}
