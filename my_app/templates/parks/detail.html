@@ -15,17 +15,33 @@
         <a href="{% url 'park-delete' park.id %}" style="color: white; background: red; padding:6px 12px; border-radius:5px;">Delete</a>
     </div>  
 
-    <h2>Available Activity</h2>
+
+    <h3>{{ park.name }}'s Activities </h3>
+    {% if park.activity.count %}
+        {% for activity in park.activity.all %}
+            <a href="{% url 'activity-detail' activity.id %}">
+                <p><strong>{{activity.name}} - Start Date: {{activity.date }}</strong></p>
+            </a>
+            {% endfor %}
+        {% else %}
+        <p>{{park.name}} doesn't have any activities </p>
+        {% endif %}
+
+
+    <h2>Available Activities</h2>
     <ul>
         {% for activity in activitys %}
-            <li>{{activity.name}} - Start Date: {{activity.date }}</li>
+            <li><strong>{{activity.name}} - Start Date: {{activity.date }}</strong></li>
+
+            <form action="{% url 'add-activity-to-park' park.id activity.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Add activity to Park</button>
+            </form>
         {% empty %}
-            <li>No Activity</li>
+            <li>{{park.name}} already has all the available activities</li>
         {% endfor %}
     </ul>
-
     
-
     <h2>Add a Animal</h2>
     <form method='post' action="{% url 'add-animal' park.id %}">
         {% csrf_token %}

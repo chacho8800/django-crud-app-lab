@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import NationalParks, Animal, Activity
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -42,7 +42,7 @@ def parks(request): # index
 @login_required
 def park_detail(request, park_id): # detail
     park = NationalParks.objects.get(id=park_id)
-    activitys = Activity.objects.all()
+    activitys = Activity.objects.exclude(id__in = park.activity.all().values_list('id'))
     animals = park.animals.all()
     animal_form = AnimalForm()
     return render(request, 'parks/detail.html', {
@@ -70,6 +70,15 @@ def animal_detail(request,animal_id):
     return render(request, 'animal/animal_detail.html', {
          'animal': animal_id
         })
+
+@login_required
+def add_activity_to_park(request, park_id, activity_id):
+    # NationalParks.objects.get(id=park_id).activity.add(id=activity_id)
+    park = get_object_or_404(NationalParks, id=park_id)
+    activity = get_object_or_404(Activity, id=activity_id)
+
+    park.activity.add(activity)
+    return redirect('park-detail', park_id=park_id)
 
 
 class AnimalsList(LoginRequiredMixin, ListView):
